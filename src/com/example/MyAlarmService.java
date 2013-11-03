@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.widget.Toast;
                            
 
 public class MyAlarmService extends Service 
@@ -24,15 +25,16 @@ public class MyAlarmService extends Service
     @Override
     public void onCreate() 
     {
+    	Toast.makeText(getApplicationContext(), "Service Created", 1).show();
        // TODO Auto-generated method stub  
        super.onCreate();
     }
 
    @SuppressWarnings("static-access")
    @Override
-   public void onStart(Intent intent, int startId)
+   public int onStartCommand(Intent intent, int flags, int startId)
    {
-       super.onStart(intent, startId);
+       super.onStartCommand(intent, flags, startId);
      
        mManager = (NotificationManager) this.getApplicationContext().getSystemService(this.getApplicationContext().NOTIFICATION_SERVICE);
 	   Intent intent1 = new Intent(this.getApplicationContext(),MainActivity.class);
@@ -46,6 +48,7 @@ public class MyAlarmService extends Service
        notification.setLatestEventInfo(this.getApplicationContext(), "AlarmManagerDemo", "This is a test message!", pendingNotificationIntent);
 
        mManager.notify(0, notification);
+       return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
