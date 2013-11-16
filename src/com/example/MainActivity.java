@@ -51,9 +51,9 @@ public class MainActivity extends Activity
 	}
 	
 	/* Bundle Keys */
-	final static String EV_NAME = "event_name";
-	final static String EV_DESC = "event_desc";
-	final static String EV_COLR = "event_color";
+	private final static String EV_NAME = "event_name";
+	private final static String EV_DESC = "event_desc";
+	private final static String EV_COLR = "event_color";
 	private final int ev_color = 212121;
 	
 	private void create_Alarm()

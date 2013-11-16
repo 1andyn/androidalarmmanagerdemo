@@ -9,10 +9,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.IBinder;
                            
 public class MyAlarmService extends Service{
+	
+	private final static String EV_NAME = "event_name";
+	private final static String EV_DESC = "event_desc";
+	private final static String EV_COLR = "event_color";
 	
 	private Bitmap icon;
 	private Uri sound;
@@ -92,9 +95,9 @@ public class MyAlarmService extends Service{
     /* Used for setting name/body texts outside of this AlarmServiceModule */
     public void acquireNewData(Intent i)
     {
-    	ev_name = i.getStringExtra(MainActivity.EV_NAME);
-    	desc_name = i.getStringExtra(MainActivity.EV_DESC);
-    	ledcolor = i.getIntExtra(MainActivity.EV_COLR, Default_Color);
+    	ev_name = i.getStringExtra(EV_NAME);
+    	desc_name = i.getStringExtra(EV_DESC);
+    	ledcolor = i.getIntExtra(EV_COLR, Default_Color);
     }
     
 }
