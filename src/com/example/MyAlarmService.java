@@ -15,6 +15,9 @@ public class MyAlarmService extends Service{
 	
 	private Bitmap icon;
 	private Uri sound;
+	private int ledinterval = 1000; // Milliseconds
+	private int ledcolor = 0xff0000ff;
+	private final long[] pattern = {0, 100, 1000, 300, 200, 100, 500, 200, 100};
 	
      private NotificationManager mManager;
 
@@ -44,21 +47,27 @@ public class MyAlarmService extends Service{
        super.onStartCommand(intent, flags, startId);
      
        mManager = (NotificationManager) this.getApplicationContext().getSystemService(this.getApplicationContext().NOTIFICATION_SERVICE);
-	   Intent intent1 = new Intent(this.getApplicationContext(),MainActivity.class);
+	   Intent OpenIntent = new Intent(this.getApplicationContext(),MainActivity.class);
+	   /* Pending Intent is for triggering Alarm */
+	   PendingIntent pendingNoteIntent = PendingIntent.getActivity(this.getApplicationContext(),0, OpenIntent,
+			   PendingIntent.FLAG_UPDATE_CURRENT);
+
 	   
 	   Notification notification = new Notification.Builder(getApplicationContext())
        .setContentTitle("Event Title")
        .setContentText("Got to fill up gas tank for car")
+       .setTicker("Planner Plus Notification!")
        .setSmallIcon(R.drawable.ic_action_event)
        .setLargeIcon(icon)
        .setSound(sound)
+       .setVibrate(pattern)
+       .setLights(ledcolor, ledinterval, ledinterval)
        .build();
-	   
-	   intent1.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-	   PendingIntent pendingNotificationIntent = PendingIntent.getActivity( this.getApplicationContext(),0, intent1,PendingIntent.FLAG_UPDATE_CURRENT);
+	   // Hide Notification after it is selected
+	   OpenIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_CLEAR_TOP);
        notification.flags |= Notification.FLAG_AUTO_CANCEL;
-
+	   
        mManager.notify(0, notification);
        return super.onStartCommand(intent, flags, startId);
     }
