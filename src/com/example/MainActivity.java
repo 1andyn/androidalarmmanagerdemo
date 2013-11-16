@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -51,6 +50,12 @@ public class MainActivity extends Activity
 	
 	}
 	
+	/* Bundle Keys */
+	final static String EV_NAME = "event_name";
+	final static String EV_DESC = "event_desc";
+	final static String EV_COLR = "event_color";
+	private final int ev_color = 212121;
+	
 	private void create_Alarm()
 	{
 		/* Instantiate a Calendar */ 
@@ -58,6 +63,10 @@ public class MainActivity extends Activity
 	    calendar.add(Calendar.SECOND, 5);
 		
 	    Intent AlarmIntent = new Intent(this, MyReceiver.class);
+	    AlarmIntent.putExtra(EV_NAME, "Change Event Name to This!");
+	    AlarmIntent.putExtra(EV_DESC, "Change Description to This!");
+	    AlarmIntent.putExtra(EV_COLR, ev_color);
+	    
 	    PendingIntent DispIntent = PendingIntent.getBroadcast(this, Alarm_ID, AlarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 	    /* Scheduling the Alarm to be triggered*/
@@ -71,6 +80,12 @@ public class MainActivity extends Activity
 	{
 		/* Recreate the alarm creation data */
 		Intent AlarmIntent = new Intent(this, MyReceiver.class);
+		
+		/* Intent needs ALL original data*/
+//	    AlarmIntent.putExtra(EV_NAME, "Change Event Name to This!");
+//	    AlarmIntent.putExtra(EV_DESC, "Change Description to This!");
+//	    AlarmIntent.putExtra(EV_COLR, ev_color);
+	    
 		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 		PendingIntent DispIntent = PendingIntent.getBroadcast(this, Alarm_ID, AlarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		

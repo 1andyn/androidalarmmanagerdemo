@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.IBinder;
                            
 public class MyAlarmService extends Service{
@@ -21,7 +22,8 @@ public class MyAlarmService extends Service{
 	private final static String note_tick = "Planner Plus Notification!";
 	private final static String Default_Name = "DEFAULT EVENT NAME";
 	private final static String Default_Desc = "DEFAULT DESCRIPTION TEXT";
-	private int ledcolor = 0xff0000ff; // LED Color for Notification (will become Dynamic
+	private final static int Default_Color = 0xff0000ff;
+	private int ledcolor = Default_Color; // LED Color for Notification (will become Dynamic
 	private final long[] pattern = {100, 100, 100, 100, 100, 100}; // Vibrate Pattern
 	
      private NotificationManager mManager;
@@ -51,7 +53,10 @@ public class MyAlarmService extends Service{
    public int onStartCommand(Intent intent, int flags, int startId)
    {
        super.onStartCommand(intent, flags, startId);
-     
+       
+       //Set New Data
+       acquireNewData(intent);
+       
 	   Intent OpenIntent = new Intent(this, MainActivity.class);
 	   OpenIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	   /* Pending Intent is for intent that is triggered upon notification click */
@@ -85,10 +90,11 @@ public class MyAlarmService extends Service{
     }
 
     /* Used for setting name/body texts outside of this AlarmServiceModule */
-    public void setNameDesc(String name, String desc)
+    public void acquireNewData(Intent i)
     {
-    	ev_name = name; // Event name
-    	desc_name = desc; // Desc name
+    	ev_name = i.getStringExtra(MainActivity.EV_NAME);
+    	desc_name = i.getStringExtra(MainActivity.EV_DESC);
+    	ledcolor = i.getIntExtra(MainActivity.EV_COLR, Default_Color);
     }
     
 }
