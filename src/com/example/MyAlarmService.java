@@ -16,8 +16,8 @@ public class MyAlarmService extends Service{
 	private Bitmap icon;
 	private Uri sound;
 	private int ledinterval = 1000; // Milliseconds
-	private int ledcolor = 0xff0000ff;
-	private final long[] pattern = {0, 100, 1000, 300, 200, 100, 500, 200, 100};
+	private int ledcolor = 0xff0000ff; // LED Color for Notification (will become Dynamic
+	private final long[] pattern = {100, 100, 100, 100, 100, 100}; // Vibrate Pattner
 	
      private NotificationManager mManager;
 
@@ -32,7 +32,8 @@ public class MyAlarmService extends Service{
     {
     	initialization();
     }
-
+   
+    /* Function for initializing Variables */
    private void initialization()
    {
 	   icon = BitmapFactory.decodeResource(this.getApplicationContext().getResources(),
@@ -52,7 +53,7 @@ public class MyAlarmService extends Service{
 	   PendingIntent pendingNoteIntent = PendingIntent.getActivity(this.getApplicationContext(),0, OpenIntent,
 			   PendingIntent.FLAG_UPDATE_CURRENT);
 
-	   
+	   /* Notification Creation Code*/
 	   Notification notification = new Notification.Builder(getApplicationContext())
        .setContentTitle("Event Title")
        .setContentText("Got to fill up gas tank for car")
