@@ -54,23 +54,23 @@ public class MyAlarmService extends Service{
      
        mManager = (NotificationManager) this.getApplicationContext().getSystemService(this.getApplicationContext().NOTIFICATION_SERVICE);
 	   Intent OpenIntent = new Intent(this.getApplicationContext(),MainActivity.class);
-	   /* Pending Intent is for triggering Alarm */
+	   /* Pending Intent is for trigger */
 	   PendingIntent pendingNoteIntent = PendingIntent.getActivity(this.getApplicationContext(),0, OpenIntent,
 			   PendingIntent.FLAG_UPDATE_CURRENT);
 
 	   /* Notification Creation Code*/
 	   Notification notification = new Notification.Builder(getApplicationContext())
-       .setContentTitle(ev_name)
-       .setContentText(desc_name)
-       .setTicker(note_tick)
-       .setSmallIcon(R.drawable.ic_action_event)
-       .setLargeIcon(icon)
-       .setSound(sound)
-       .setVibrate(pattern)
-       .setLights(ledcolor, ledinterval, ledinterval)
+       .setContentTitle(ev_name) // TITLE OF NOTIFICATION
+       .setContentText(desc_name) // BODY TEXT OF NOTIFICATION
+       .setTicker(note_tick) // MESSAGE TO USER during NOTIFICATION (SMALL TEXT)
+       .setSmallIcon(R.drawable.ic_action_event) // SMALLER NOTIFICATION ICON
+       .setLargeIcon(icon) // LARGER NOTIFICATION ICON
+       .setSound(sound) // SET SOUND
+       .setVibrate(pattern) // SET VIBRATE PATTERN
+       .setLights(ledcolor, ledinterval, ledinterval) // SET LED SETTINGS, LEDCOLOR, DURATION LED ON, DURATION OFF
        .build();
 
-	   // Hide Notification after it is selected
+	   // Code that Hides Notification after it is selected
 	   OpenIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_CLEAR_TOP);
        notification.flags |= Notification.FLAG_AUTO_CANCEL;
 	   
@@ -81,10 +81,10 @@ public class MyAlarmService extends Service{
     @Override
     public void onDestroy() 
     {
-        // TODO Auto-generated method stub
         super.onDestroy();
     }
 
+    /* Used for setting name/body texts outside of this AlarmServiceModule */
     public void setNameDesc(String name, String desc)
     {
     	ev_name = name; // Event name
