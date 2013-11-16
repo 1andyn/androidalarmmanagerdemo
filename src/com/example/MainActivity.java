@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,8 +16,8 @@ public class MainActivity extends Activity
 {
 	private Button create;
 	private Button cancel;
-	
-    private PendingIntent pendingIntent;
+	private int Alarm_ID = 1;
+    private PendingIntent DispIntent;
     
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
@@ -55,20 +56,30 @@ public class MainActivity extends Activity
 	{
 		/* Instantiate a Calendar */ 
 	    Calendar calendar = Calendar.getInstance();
-	    calendar.add(Calendar.SECOND, 5);
+	    calendar.add(Calendar.SECOND, 10);
 		
-	    Intent myIntent = new Intent(MainActivity.this, MyReceiver.class);
-	    pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent,0);
+	    Intent AlarmIntent = new Intent(this, MyReceiver.class);
+	    DispIntent = PendingIntent.getBroadcast(this, 0, AlarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+	    AlarmIntent.setData(Uri.parse("custom://" + Alarm_ID));
+	    AlarmIntent.setAction(String.valueOf(Alarm_ID));
 	    
 	    AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-	    alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+	    alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), DispIntent);
 	    
-	    Toast.makeText(this,"Created Alarm..wait 5 seconds" ,Toast.LENGTH_SHORT).show();
+	    Toast.makeText(this,"Created Alarm...wait 5 seconds" ,Toast.LENGTH_SHORT).show();
 	}
 	
 	private void cancel_Alarm()
 	{
+		Intent AlarmIntent = new Intent(this, MyReceiver.class);
+		AlarmIntent.setData(Uri.parse("custom://" + Alarm_ID));
+		AlarmIntent.setAction(String.valueOf(Alarm_ID));
+		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+		PendingIntent displayIntent = PendingIntent.getBroadcast(this, 0, AlarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		alarmManager.cancel(displayIntent);
 		
+		Toast.makeText(this,"Alarm Cancelled...supposedly" ,Toast.LENGTH_SHORT).show();
 	}
 	
 	

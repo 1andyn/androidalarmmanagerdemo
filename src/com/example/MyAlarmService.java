@@ -52,11 +52,10 @@ public class MyAlarmService extends Service{
    {
        super.onStartCommand(intent, flags, startId);
      
-       mManager = (NotificationManager) this.getApplicationContext().getSystemService(this.getApplicationContext().NOTIFICATION_SERVICE);
-	   Intent OpenIntent = new Intent(this.getApplicationContext(),MainActivity.class);
-	   /* Pending Intent is for trigger */
-	   PendingIntent pendingNoteIntent = PendingIntent.getActivity(this.getApplicationContext(),0, OpenIntent,
-			   PendingIntent.FLAG_UPDATE_CURRENT);
+	   Intent OpenIntent = new Intent(this, MainActivity.class);
+	   OpenIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	   /* Pending Intent is for intent that is triggered upon notification click */
+	   PendingIntent pendingNoteIntent = PendingIntent.getActivity(this, 0, OpenIntent, 0);
 
 	   /* Notification Creation Code*/
 	   Notification notification = new Notification.Builder(getApplicationContext())
@@ -68,10 +67,11 @@ public class MyAlarmService extends Service{
        .setSound(sound) // SET SOUND
        .setVibrate(pattern) // SET VIBRATE PATTERN
        .setLights(ledcolor, ledinterval, ledinterval) // SET LED SETTINGS, LEDCOLOR, DURATION LED ON, DURATION OFF
+       .setContentIntent(pendingNoteIntent) // SET INTENT FOR RETURNING TO APPLICATION WHEN NOTIFICATION IS PRESSED
        .build();
+       mManager = (NotificationManager) this.getApplicationContext().getSystemService(this.NOTIFICATION_SERVICE);
 
 	   // Code that Hides Notification after it is selected
-	   OpenIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_CLEAR_TOP);
        notification.flags |= Notification.FLAG_AUTO_CANCEL;
 	   
        mManager.notify(0, notification);
