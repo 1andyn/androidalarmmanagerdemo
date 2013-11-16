@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 public class MainActivity extends Activity 
@@ -61,6 +62,8 @@ public class MainActivity extends Activity
 	    
 	    AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 	    alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+	    
+	    Toast.makeText(this,"Created Alarm..wait 5 seconds" ,Toast.LENGTH_SHORT).show();
 	}
 	
 	private void cancel_Alarm()
