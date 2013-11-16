@@ -16,8 +16,11 @@ public class MyAlarmService extends Service{
 	private Bitmap icon;
 	private Uri sound;
 	private int ledinterval = 1000; // Milliseconds
+	private String ev_name; // Event name
+	private String desc_name; // Desc name
+	private final static String note_tick = "Planner Plus Notification!";
 	private int ledcolor = 0xff0000ff; // LED Color for Notification (will become Dynamic
-	private final long[] pattern = {100, 100, 100, 100, 100, 100}; // Vibrate Pattner
+	private final long[] pattern = {100, 100, 100, 100, 100, 100}; // Vibrate Pattern
 	
      private NotificationManager mManager;
 
@@ -80,4 +83,10 @@ public class MyAlarmService extends Service{
         super.onDestroy();
     }
 
+    public void setNameDesc(String name, String desc)
+    {
+    	ev_name = name; // Event name
+    	desc_name = desc; // Desc name
+    }
+    
 }
