@@ -95,12 +95,5 @@ public class MyAlarmService extends Service{
     {
         super.onDestroy();
     }
-
-    /* Used for setting name/body texts outside of this AlarmServiceModule */
-    public void acquireNewData(Intent i)
-    {
-    	ev_name = i.getStringExtra(EV_NAME);
-    	desc_name = i.getStringExtra(EV_DESC);
-    }
     
 }
