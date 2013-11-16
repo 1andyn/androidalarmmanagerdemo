@@ -9,13 +9,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.IBinder;
                            
 public class MyAlarmService extends Service{
 	
 	private final static String EV_NAME = "event_name";
 	private final static String EV_DESC = "event_desc";
-	private final static String EV_COLR = "event_color";
 	
 	private Bitmap icon;
 	private Uri sound;
@@ -56,10 +56,14 @@ public class MyAlarmService extends Service{
    public int onStartCommand(Intent intent, int flags, int startId)
    {
        super.onStartCommand(intent, flags, startId);
-       
-       //Set New Data
-       acquireNewData(intent);
-       
+       Bundle extras = intent.getExtras();
+	   if(extras != null){
+	       ev_name = extras.getString(EV_NAME);
+		   desc_name = extras.getString(EV_DESC);
+	   } else {
+		   System.out.println("Bundle has been detected as empty");
+	   }
+
 	   Intent OpenIntent = new Intent(this, MainActivity.class);
 	   OpenIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	   /* Pending Intent is for intent that is triggered upon notification click */
@@ -97,7 +101,6 @@ public class MyAlarmService extends Service{
     {
     	ev_name = i.getStringExtra(EV_NAME);
     	desc_name = i.getStringExtra(EV_DESC);
-    	ledcolor = i.getIntExtra(EV_COLR, Default_Color);
     }
     
 }

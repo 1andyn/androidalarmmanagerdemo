@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +16,7 @@ public class MainActivity extends Activity
 {
 	private Button create;
 	private Button cancel;
-	private int Alarm_ID = 1; // USED THIS ID TO KEEP TRACK OF YOUR ALARMS!
+	private int Alarm_ID = 1337; // USED THIS ID TO KEEP TRACK OF YOUR ALARMS!
     
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
@@ -53,8 +54,6 @@ public class MainActivity extends Activity
 	/* Bundle Keys */
 	private final static String EV_NAME = "event_name";
 	private final static String EV_DESC = "event_desc";
-	private final static String EV_COLR = "event_color";
-	private final int ev_color = 212121;
 	
 	private void create_Alarm()
 	{
@@ -63,11 +62,13 @@ public class MainActivity extends Activity
 	    calendar.add(Calendar.SECOND, 5);
 		
 	    Intent AlarmIntent = new Intent(this, MyReceiver.class);
-	    AlarmIntent.putExtra(EV_NAME, "Change Event Name to This!");
-	    AlarmIntent.putExtra(EV_DESC, "Change Description to This!");
-	    AlarmIntent.putExtra(EV_COLR, ev_color);
+	    AlarmIntent.setAction("com.Action");
+	    String name = "Change Event Name to This!";
+	    String desc = "Change Description to This!";
+	    AlarmIntent.putExtra(EV_NAME, name);
+	    AlarmIntent.putExtra(EV_DESC, desc);
 	    
-	    PendingIntent DispIntent = PendingIntent.getBroadcast(this, Alarm_ID, AlarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+	    PendingIntent DispIntent = PendingIntent.getBroadcast(this, Alarm_ID, AlarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
 	    /* Scheduling the Alarm to be triggered*/
 	    AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
@@ -84,7 +85,7 @@ public class MainActivity extends Activity
 		/* Intent needs ALL original data*/
 //	    AlarmIntent.putExtra(EV_NAME, "Change Event Name to This!");
 //	    AlarmIntent.putExtra(EV_DESC, "Change Description to This!");
-//	    AlarmIntent.putExtra(EV_COLR, ev_color);
+
 	    
 		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 		PendingIntent DispIntent = PendingIntent.getBroadcast(this, Alarm_ID, AlarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
