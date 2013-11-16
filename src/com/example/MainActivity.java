@@ -16,6 +16,13 @@ public class MainActivity extends Activity
 {
 	private Button create;
 	private Button cancel;
+	
+	/* Bundle & Extra Keys */
+	private final static String EV_NAME = "event_name";
+	private final static String EV_DESC = "event_desc";
+    private String name = "Change Event Name to This!";
+    private String desc = "Change Description to This!";
+    
 	private int Alarm_ID = 1337; // USED THIS ID TO KEEP TRACK OF YOUR ALARMS!
     
 	@Override
@@ -48,12 +55,7 @@ public class MainActivity extends Activity
 		        cancel_Alarm();
 		    }
 		});
-	
 	}
-	
-	/* Bundle Keys */
-	private final static String EV_NAME = "event_name";
-	private final static String EV_DESC = "event_desc";
 	
 	private void create_Alarm()
 	{
@@ -64,8 +66,7 @@ public class MainActivity extends Activity
 	    Intent AlarmIntent = new Intent().setClass(this, MyReceiver.class);
 	    AlarmIntent.setData(Uri.parse("custom://" + Alarm_ID));
 	    AlarmIntent.setAction(String.valueOf(Alarm_ID));
-	    String name = "Change Event Name to This!";
-	    String desc = "Change Description to This!";
+
 	    AlarmIntent.putExtra(EV_NAME, name);
 	    AlarmIntent.putExtra(EV_DESC, desc);
 	    
@@ -82,13 +83,7 @@ public class MainActivity extends Activity
 	private void cancel_Alarm()
 	{
 		/* Recreate the alarm creation data */
-		Intent AlarmIntent = new Intent(this, MyReceiver.class);
-		
-		/* Intent needs ALL original data*/
-//	    AlarmIntent.putExtra(EV_NAME, "Change Event Name to This!");
-//	    AlarmIntent.putExtra(EV_DESC, "Change Description to This!");
-
-	    
+		Intent AlarmIntent = new Intent(this, MyReceiver.class);    
 		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 		AlarmIntent.setData(Uri.parse("custom://" + Alarm_ID));
 		AlarmIntent.setAction(String.valueOf(Alarm_ID));
