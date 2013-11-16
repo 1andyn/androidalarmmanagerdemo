@@ -50,8 +50,6 @@ public class MyAlarmService extends Service
        .setSmallIcon(R.drawable.ic_launcher)
        .setLargeIcon(icon)
        .build();
-	   
-	   //Notification notification = new Notification(R.drawable.ic_launcher,"This is a test message!", System.currentTimeMillis());
 	
 	   intent1.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
