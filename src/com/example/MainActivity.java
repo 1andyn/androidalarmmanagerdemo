@@ -61,18 +61,21 @@ public class MainActivity extends Activity
 	    Calendar calendar = Calendar.getInstance();
 	    calendar.add(Calendar.SECOND, 5);
 		
-	    Intent AlarmIntent = new Intent(this, MyReceiver.class);
-	    AlarmIntent.setAction("com.Action");
+	    Intent AlarmIntent = new Intent().setClass(this, MyReceiver.class);
+	    AlarmIntent.setData(Uri.parse("custom://" + Alarm_ID));
+	    AlarmIntent.setAction(String.valueOf(Alarm_ID));
 	    String name = "Change Event Name to This!";
 	    String desc = "Change Description to This!";
 	    AlarmIntent.putExtra(EV_NAME, name);
 	    AlarmIntent.putExtra(EV_DESC, desc);
+	    this.sendBroadcast(AlarmIntent);
 	    
-	    PendingIntent DispIntent = PendingIntent.getBroadcast(this, Alarm_ID, AlarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+	    PendingIntent DispIntent = PendingIntent.getBroadcast(this.getApplicationContext(), Alarm_ID, 
+	    		AlarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 	    /* Scheduling the Alarm to be triggered*/
-	    AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-	    alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), DispIntent);
+//	    AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+//	    alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), DispIntent);
 	    
 	    Toast.makeText(this,"Created Alarm...wait 5 seconds" ,Toast.LENGTH_SHORT).show();
 	}
@@ -88,7 +91,10 @@ public class MainActivity extends Activity
 
 	    
 		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-		PendingIntent DispIntent = PendingIntent.getBroadcast(this, Alarm_ID, AlarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		AlarmIntent.setData(Uri.parse("custom://" + Alarm_ID));
+		AlarmIntent.setAction(String.valueOf(Alarm_ID));
+		PendingIntent DispIntent = PendingIntent.getBroadcast(this.getApplicationContext(), Alarm_ID, 
+				AlarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		
 		/* Instead of setting an alarm, use cancel on the pending Intent*/
 		alarmManager.cancel(DispIntent);
