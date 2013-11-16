@@ -1,6 +1,5 @@
 package com.example;
 
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -8,30 +7,36 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.IBinder;
-import android.widget.Toast;
                            
-
-public class MyAlarmService extends Service 
-
-{
+public class MyAlarmService extends Service{
+	
+	private Bitmap icon;
+	private Uri sound;
+	
      private NotificationManager mManager;
 
      @Override
      public IBinder onBind(Intent arg0)
      {
-       // TODO Auto-generated method stub
         return null;
      }
 
     @Override
     public void onCreate() 
     {
-    	Toast.makeText(getApplicationContext(), "Service Created", 1).show();
-       // TODO Auto-generated method stub  
-       super.onCreate();
+    	initialization();
     }
 
+   private void initialization()
+   {
+	   icon = BitmapFactory.decodeResource(this.getApplicationContext().getResources(),
+               R.drawable.patrick);
+	   sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+   }
+    
    @SuppressWarnings("static-access")
    @Override
    public int onStartCommand(Intent intent, int flags, int startId)
@@ -41,16 +46,14 @@ public class MyAlarmService extends Service
        mManager = (NotificationManager) this.getApplicationContext().getSystemService(this.getApplicationContext().NOTIFICATION_SERVICE);
 	   Intent intent1 = new Intent(this.getApplicationContext(),MainActivity.class);
 	   
-	   Bitmap icon = BitmapFactory.decodeResource(this.getApplicationContext().getResources(),
-               R.drawable.patrick);
-	   
 	   Notification notification = new Notification.Builder(getApplicationContext())
-       .setContentTitle("This is an Event Title")
-       .setContentText("This is the event Subject")
-       .setSmallIcon(R.drawable.ic_launcher)
+       .setContentTitle("Event Title")
+       .setContentText("Got to fill up gas tank for car")
+       .setSmallIcon(R.drawable.ic_action_event)
        .setLargeIcon(icon)
+       .setSound(sound)
        .build();
-	
+	   
 	   intent1.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
 	   PendingIntent pendingNotificationIntent = PendingIntent.getActivity( this.getApplicationContext(),0, intent1,PendingIntent.FLAG_UPDATE_CURRENT);
