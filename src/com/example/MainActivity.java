@@ -77,7 +77,7 @@ public class MainActivity extends Activity
 		/* Instead of setting an alarm, use cancel on the pending Intent*/
 		alarmManager.cancel(DispIntent);
 		
-		Toast.makeText(this,"Alarm Cancelled...supposedly" ,Toast.LENGTH_SHORT).show();
+		Toast.makeText(this,"Alarm Cancelled." ,Toast.LENGTH_SHORT).show();
 	}
 	
 	
