@@ -26,8 +26,8 @@ public final class R {
         public static final int patrick=0x7f020002;
     }
     public static final class id {
-        public static final int Cancel Alarm=0x7f080000;
-        public static final int Create Alarm=0x7f080001;
+        public static final int Cancel_Alarm=0x7f080000;
+        public static final int Create_Alarm=0x7f080001;
         public static final int action_settings=0x7f080002;
     }
     public static final class layout {

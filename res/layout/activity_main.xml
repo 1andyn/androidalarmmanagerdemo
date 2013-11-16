@@ -6,7 +6,7 @@
     android:layout_gravity="center" >
 
     <Button
-        android:id="@+id/Cancel Alarm"
+        android:id="@+id/Cancel_Alarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -14,10 +14,10 @@
         android:text="Cancel" />
 
     <Button
-        android:id="@+id/Create Alarm"
+        android:id="@+id/Create_Alarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/Cancel Alarm"
+        android:layout_above="@+id/Cancel_Alarm"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="22dp"
         android:text="Alarm" />

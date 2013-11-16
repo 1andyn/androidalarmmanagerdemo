@@ -16,9 +16,11 @@ public class MyAlarmService extends Service{
 	private Bitmap icon;
 	private Uri sound;
 	private int ledinterval = 1000; // Milliseconds
-	private String ev_name; // Event name
-	private String desc_name; // Desc name
+	private String ev_name = Default_Name; // Event name
+	private String desc_name = Default_Desc; // Desc name
 	private final static String note_tick = "Planner Plus Notification!";
+	private final static String Default_Name = "DEFAULT EVENT NAME";
+	private final static String Default_Desc = "DEFAULT DESCRIPTION TEXT";
 	private int ledcolor = 0xff0000ff; // LED Color for Notification (will become Dynamic
 	private final long[] pattern = {100, 100, 100, 100, 100, 100}; // Vibrate Pattern
 	
@@ -58,9 +60,9 @@ public class MyAlarmService extends Service{
 
 	   /* Notification Creation Code*/
 	   Notification notification = new Notification.Builder(getApplicationContext())
-       .setContentTitle("Event Title")
-       .setContentText("Got to fill up gas tank for car")
-       .setTicker("Planner Plus Notification!")
+       .setContentTitle(ev_name)
+       .setContentText(desc_name)
+       .setTicker(note_tick)
        .setSmallIcon(R.drawable.ic_action_event)
        .setLargeIcon(icon)
        .setSound(sound)
@@ -75,7 +77,7 @@ public class MyAlarmService extends Service{
        mManager.notify(0, notification);
        return super.onStartCommand(intent, flags, startId);
     }
-
+   
     @Override
     public void onDestroy() 
     {

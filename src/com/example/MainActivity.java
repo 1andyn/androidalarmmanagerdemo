@@ -20,6 +20,7 @@ public class MainActivity extends Activity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     
+    initialize_layout();
 
     Calendar calendar = Calendar.getInstance();
 
@@ -40,7 +41,10 @@ public class MainActivity extends Activity
     startActivity(intent);
 	} //end onCreate
 	
-
+	private void initialize_layout()
+	{
+		
+	}
 	
 	
 	
