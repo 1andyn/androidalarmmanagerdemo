@@ -16,8 +16,7 @@ public class MainActivity extends Activity
 {
 	private Button create;
 	private Button cancel;
-	private int Alarm_ID = 1;
-    private PendingIntent DispIntent;
+	private int Alarm_ID = 1; // USED THIS ID TO KEEP TRACK OF YOUR ALARMS!
     
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
@@ -56,13 +55,12 @@ public class MainActivity extends Activity
 	{
 		/* Instantiate a Calendar */ 
 	    Calendar calendar = Calendar.getInstance();
-	    calendar.add(Calendar.SECOND, 10);
+	    calendar.add(Calendar.SECOND, 5);
 		
 	    Intent AlarmIntent = new Intent(this, MyReceiver.class);
-	    DispIntent = PendingIntent.getBroadcast(this, 0, AlarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-	    AlarmIntent.setData(Uri.parse("custom://" + Alarm_ID));
-	    AlarmIntent.setAction(String.valueOf(Alarm_ID));
-	    
+	    PendingIntent DispIntent = PendingIntent.getBroadcast(this, Alarm_ID, AlarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+	    /* Scheduling the Alarm to be triggered*/
 	    AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 	    alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), DispIntent);
 	    
@@ -71,13 +69,13 @@ public class MainActivity extends Activity
 	
 	private void cancel_Alarm()
 	{
+		/* Recreate the alarm creation data */
 		Intent AlarmIntent = new Intent(this, MyReceiver.class);
-		AlarmIntent.setData(Uri.parse("custom://" + Alarm_ID));
-		AlarmIntent.setAction(String.valueOf(Alarm_ID));
 		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-		PendingIntent displayIntent = PendingIntent.getBroadcast(this, 0, AlarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-		alarmManager.cancel(displayIntent);
+		PendingIntent DispIntent = PendingIntent.getBroadcast(this, Alarm_ID, AlarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		
+		/* Instead of setting an alarm, use cancel on the pending Intent*/
+		alarmManager.cancel(DispIntent);
 		
 		Toast.makeText(this,"Alarm Cancelled...supposedly" ,Toast.LENGTH_SHORT).show();
 	}
