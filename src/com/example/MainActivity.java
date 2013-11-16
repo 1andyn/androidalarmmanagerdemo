@@ -29,7 +29,7 @@ public class MainActivity extends Activity
 
 //    calendar.set(Calendar.HOUR_OF_DAY, 23);
 //    calendar.add(Calendar.MINUTE, 6);
-    calendar.add(Calendar.SECOND, 15);
+    calendar.add(Calendar.SECOND, 10);
 //    calendar.set(Calendar.AM_PM,Calendar.PM);
     
     Intent myIntent = new Intent(MainActivity.this, MyReceiver.class);
